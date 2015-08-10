@@ -47,6 +47,12 @@ public class UserEnttiyDaoImpleTest {
     }
 
     @Test
+    public void testUserByRole(){
+        List<UserEntity> userEntityListSeller = userEntityDaoImple.getUserByRole("seller");
+        List<UserEntity> userEntityListCustomer = userEntityDaoImple.getUserByRole("customer");
+        return;
+    }
+    @Test
     public void testFindAll() {
 //        List<FoodEntity> foodEntityList = userEntityDaoImple.
 //        return;

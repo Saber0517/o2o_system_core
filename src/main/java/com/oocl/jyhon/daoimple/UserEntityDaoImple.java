@@ -9,6 +9,7 @@ import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 
 import java.sql.*;
+import java.util.LinkedList;
 import java.util.List;
 
 import static java.beans.Statement.*;
@@ -39,7 +40,7 @@ public class UserEntityDaoImple implements UserEntityDao {
             pst.setInt(7, Entity.getStatusId());
             result = pst.executeUpdate();
             rs = pst.getGeneratedKeys();
-            if (rs.next()){
+            if (rs.next()) {
                 result = rs.getInt(1);
             }
             con.commit();
@@ -50,6 +51,7 @@ public class UserEntityDaoImple implements UserEntityDao {
         return result;
     }
 
+    @Override
     public int updateEntityStatus(UserEntity userEntity) {
 
         String sql = "UPDATE " + tableName + " SET STATUSID=? WHERE USERID=?";
@@ -71,6 +73,36 @@ public class UserEntityDaoImple implements UserEntityDao {
         return result;
     }
 
+    @Override
+    public List<UserEntity> getUserByRole(String role) {
+        List<UserEntity> userEntityList = new LinkedList<UserEntity>();
+        String sql = "SELECT * from " + tableName + "  WHERE ROLE=?";
+        Connection con = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            con = DBConnectUtil.getConnection();
+            pst = con.prepareStatement(sql);
+            pst.setString(1, role);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                UserEntity userEntity = new UserEntity();
+                userEntity.setUserID(rs.getInt("USERID"));
+                userEntity.setUserName(rs.getString("USERNAME"));
+                userEntity.setRole(rs.getString("ROLE"));
+                userEntity.setIdCard(rs.getString("IDCARD"));
+                userEntity.setTel(rs.getString("TEL"));
+                userEntity.setStatusId(rs.getInt("STATUSID"));
+                userEntity.setLicense(rs.getString("LICENSE"));
+                userEntityList.add(userEntity);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnectUtil.free(con, pst, rs);
+        }
+        return userEntityList;
+    }
 
     @Override
     public int updateEntity(UserEntity entity) {

@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface UserEntityDao extends EntityDao<UserEntity>{
     public int updateEntityStatus(UserEntity entity) ;
+    public List<UserEntity> getUserByRole(String role);
 }
