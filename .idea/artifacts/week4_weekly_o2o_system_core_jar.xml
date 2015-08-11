@@ -2,7 +2,6 @@
   <artifact build-on-make="true" name="week4_weekly_o2o_system_core:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/week4_weekly_o2o_system_core_jar</output-path>
     <root id="root">
-      <element id="library" level="project" name="ojdbc6-11.2.0.4" />
       <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.3.1" />
       <element id="library" level="project" name="Maven: commons-dbcp:commons-dbcp:1.4" />
       <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-api:2.3" />
