@@ -1,0 +1,29 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="o2o_system_core:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/o2o_system_core_jar</output-path>
+    <root id="archive" name="o2o_system_core.jar">
+      <element id="module-output" name="o2o_system_core" />
+      <element id="extracted-dir" path="$USER_HOME$/.m2/repository/org/apache/tomcat/tomcat-servlet-api/7.0.63/tomcat-servlet-api-7.0.63.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.m2/repository/commons-io/commons-io/2.4/commons-io-2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../week4_weekly_o2o_system_admin/web/WEB-INF/lib/jstl-1.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.m2/repository/org/apache/logging/log4j/log4j-core/2.3/log4j-core-2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.m2/repository/org/apache/logging/log4j/log4j-api/2.3/log4j-api-2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.m2/repository/commons-fileupload/commons-fileupload/1.2.2/commons-fileupload-1.2.2.jar" path-in-jar="/" />
+      <element id="library" level="project" name="annotations-api" />
+      <element id="extracted-dir" path="$USER_HOME$/.m2/repository/com/google/code/gson/gson/2.3.1/gson-2.3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.m2/repository/commons-dbcp/commons-dbcp/1.4/commons-dbcp-1.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ojdbc6-11.2.0.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.m2/repository/commons-pool/commons-pool/1.5.4/commons-pool-1.5.4.jar" path-in-jar="/" />
+      <element id="library" level="application" name="jstl-1.2" />
+      <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.3.1" />
+      <element id="library" level="project" name="Maven: commons-dbcp:commons-dbcp:1.4" />
+      <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.2.2" />
+      <element id="library" level="project" name="Maven: commons-io:commons-io:2.4" />
+      <element id="library" level="project" name="Maven: commons-pool:commons-pool:1.5.4" />
+      <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-api:2.3" />
+      <element id="library" level="project" name="Maven: org.apache.logging.log4j:log4j-core:2.3" />
+      <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-servlet-api:7.0.63" />
+      <element id="library" level="application" name="ojdbc6-11.2.0.4" />
+    </root>
+  </artifact>
+</component>

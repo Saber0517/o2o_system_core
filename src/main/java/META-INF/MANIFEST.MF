@@ -1,5 +1,4 @@
 Manifest-Version: 1.0
 Class-Path: ojdbc6-11.2.0.4.jar gson-2.3.1.jar commons-dbcp-1.4.jar lo
  g4j-api-2.3.jar log4j-core-2.3.jar commons-pool-1.5.4.jar
-Main-Class: 
 
