@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -68,6 +69,36 @@ public class UserEntityDaoImple implements UserEntityDao {
         }
 
         return result;
+    }
+
+    public List<UserEntity> getUserByRole(String role) {
+        List<UserEntity> userEntityList = new LinkedList<UserEntity>();
+        String sql = "SELECT * from " + tableName + "  WHERE ROLE=?";
+        Connection con = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            con = DBConnectUtil.getConnection();
+            pst = con.prepareStatement(sql);
+            pst.setString(1, role);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                UserEntity userEntity = new UserEntity();
+                userEntity.setUserID(rs.getInt("USERID"));
+                userEntity.setUserName(rs.getString("USERNAME"));
+                userEntity.setRole(rs.getString("ROLE"));
+                userEntity.setIdCard(rs.getString("IDCARD"));
+                userEntity.setTel(rs.getString("TEL"));
+                userEntity.setStatusId(rs.getInt("STATUSID"));
+                userEntity.setLicense(rs.getString("LICENSE"));
+                userEntityList.add(userEntity);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnectUtil.free(con, pst, rs);
+        }
+        return userEntityList;
     }
 
     /**
