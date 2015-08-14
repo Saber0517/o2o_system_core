@@ -5,14 +5,12 @@ import com.oocl.jyhon.dao.UserEntityDao;
 import com.oocl.jyhon.entiy.UserEntity;
 import com.oocl.jyhon.util.DBConnectUtil;
 import com.oocl.jyhon.util.DBTableNameUtil;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
-
-import java.sql.*;
-import java.util.LinkedList;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
-
-import static java.beans.Statement.*;
 
 /**
  * Created by ZHANGJA4 on 8/6/2015.
@@ -51,7 +49,6 @@ public class UserEntityDaoImple implements UserEntityDao {
         return result;
     }
 
-    @Override
     public int updateEntityStatus(UserEntity userEntity) {
 
         String sql = "UPDATE " + tableName + " SET STATUSID=? WHERE USERID=?";
@@ -73,36 +70,84 @@ public class UserEntityDaoImple implements UserEntityDao {
         return result;
     }
 
+    /**
+     * @param name
+     * @return if name exist return 1, else 0.
+     */
     @Override
-    public List<UserEntity> getUserByRole(String role) {
-        List<UserEntity> userEntityList = new LinkedList<UserEntity>();
-        String sql = "SELECT * from " + tableName + "  WHERE ROLE=?";
+    public int checkUserName(String name) {
+        String sql = "SELECT USERNAME from " + tableName + "  WHERE USERNAME=?";
         Connection con = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
         try {
             con = DBConnectUtil.getConnection();
             pst = con.prepareStatement(sql);
-            pst.setString(1, role);
+            pst.setString(1, name);
             rs = pst.executeQuery();
-            while (rs.next()) {
-                UserEntity userEntity = new UserEntity();
-                userEntity.setUserID(rs.getInt("USERID"));
-                userEntity.setUserName(rs.getString("USERNAME"));
-                userEntity.setRole(rs.getString("ROLE"));
-                userEntity.setIdCard(rs.getString("IDCARD"));
-                userEntity.setTel(rs.getString("TEL"));
-                userEntity.setStatusId(rs.getInt("STATUSID"));
-                userEntity.setLicense(rs.getString("LICENSE"));
-                userEntityList.add(userEntity);
+            if (rs.next()) {
+                return 1;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             DBConnectUtil.free(con, pst, rs);
         }
-        return userEntityList;
+        return 0;
     }
+
+    /**
+     * @param idCard
+     * @return if idCard exist return 1, else 0.
+     */
+    @Override
+    public int checkIdCard(String idCard) {
+        String sql = "SELECT idCard from " + tableName + "  WHERE idCard=?";
+        Connection con = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            con = DBConnectUtil.getConnection();
+            pst = con.prepareStatement(sql);
+            pst.setString(1, idCard);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                return 1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnectUtil.free(con, pst, rs);
+        }
+        return 0;
+    }
+
+    /**
+     * @param telPhone
+     * @return if telPhone exist return 1, else 0.
+     */
+    @Override
+    public int checkTelPhone(String telPhone) {
+        String sql = "SELECT Tel from " + tableName + "  WHERE Tel=?";
+        Connection con = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            con = DBConnectUtil.getConnection();
+            pst = con.prepareStatement(sql);
+            pst.setString(1, telPhone);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                return 1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnectUtil.free(con, pst, rs);
+        }
+        return 0;
+    }
+
 
     @Override
     public int updateEntity(UserEntity entity) {
