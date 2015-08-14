@@ -71,6 +71,7 @@ public class UserEntityDaoImple implements UserEntityDao {
         return result;
     }
 
+    @Override
     public List<UserEntity> getUserByRole(String role) {
         List<UserEntity> userEntityList = new LinkedList<UserEntity>();
         String sql = "SELECT * from " + tableName + "  WHERE ROLE=?";
