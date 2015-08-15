@@ -25,7 +25,7 @@ public class OrderEntityDaoImpl implements OrderEntityDao {
 
     @Override
     public int addEntity(OrderEntity orderEntity) {
-        String sql = "INSERT INTO " + tableName + "(ORDERID,FOODID,STATUSID,ORDERTIME) VALUES (" + orderIDSequence + ".nextval" + ",?,?,?)";
+        String sql = "INSERT INTO " + tableName + "(ORDERID,FOODID,STATUSID,USERID,NUMBERCOUNT,ORDERTIME) VALUES (" + orderIDSequence + ".nextval" + ",?,?,?,?,?)";
         ResultSet rs = null;
         int result = 0;
         con = DBConnectUtil.getConnection();
@@ -33,7 +33,9 @@ public class OrderEntityDaoImpl implements OrderEntityDao {
             pst = con.prepareStatement(sql, new String[]{"ORDERID"});
             pst.setInt(1, orderEntity.getFoodId());
             pst.setInt(2, orderEntity.getStatusId());
-            pst.setDate(3, new java.sql.Date(new Date().getTime()));
+            pst.setInt(3, orderEntity.getUserID());
+            pst.setInt(4, orderEntity.getOrderCount());
+            pst.setDate(5, new java.sql.Date(new Date().getTime()));
             result = pst.executeUpdate();
             rs = pst.getGeneratedKeys();
             if (rs.next()) {

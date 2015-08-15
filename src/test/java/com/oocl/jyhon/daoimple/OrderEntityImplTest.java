@@ -15,6 +15,8 @@ public class OrderEntityImplTest {
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setStatusId(3);
         orderEntity.setFoodId(1);
+        orderEntity.setOrderCount(1);
+        orderEntity.setUserID(33);
         orderEntityDao.addEntity(orderEntity);
     }
 }

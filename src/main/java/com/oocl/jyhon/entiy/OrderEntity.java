@@ -1,7 +1,5 @@
 package com.oocl.jyhon.entiy;
 
-import com.sun.tools.corba.se.idl.InterfaceGen;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,9 +7,11 @@ import java.util.Date;
  * Created by WhiteSaber on 15/8/15.
  */
 public class OrderEntity implements Serializable {
-    Integer OrderId;
-    Integer FoodId;
-    Integer StatusId;
+    Integer orderId;
+    Integer foodId;
+    Integer statusId;
+    Integer userID;
+    Integer orderCount;
     Date date;
 
     @Override
@@ -21,44 +21,56 @@ public class OrderEntity implements Serializable {
 
         OrderEntity that = (OrderEntity) o;
 
-        if (OrderId != null ? !OrderId.equals(that.OrderId) : that.OrderId != null) return false;
-        if (FoodId != null ? !FoodId.equals(that.FoodId) : that.FoodId != null) return false;
-        if (StatusId != null ? !StatusId.equals(that.StatusId) : that.StatusId != null) return false;
+        if (orderId != null ? !orderId.equals(that.orderId) : that.orderId != null) return false;
+        if (foodId != null ? !foodId.equals(that.foodId) : that.foodId != null) return false;
+        if (statusId != null ? !statusId.equals(that.statusId) : that.statusId != null) return false;
+        if (userID != null ? !userID.equals(that.userID) : that.userID != null) return false;
+        if (orderCount != null ? !orderCount.equals(that.orderCount) : that.orderCount != null) return false;
         return !(date != null ? !date.equals(that.date) : that.date != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = OrderId != null ? OrderId.hashCode() : 0;
-        result = 31 * result + (FoodId != null ? FoodId.hashCode() : 0);
-        result = 31 * result + (StatusId != null ? StatusId.hashCode() : 0);
+        int result = orderId != null ? orderId.hashCode() : 0;
+        result = 31 * result + (foodId != null ? foodId.hashCode() : 0);
+        result = 31 * result + (statusId != null ? statusId.hashCode() : 0);
+        result = 31 * result + (userID != null ? userID.hashCode() : 0);
+        result = 31 * result + (orderCount != null ? orderCount.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
     }
 
-    public Integer getOrderId() {
-        return OrderId;
+    public Integer getOrderCount() {
+        return orderCount;
     }
 
-    public void setOrderId(Integer orderId) {
-        OrderId = orderId;
+    public void setOrderCount(Integer orderCount) {
+        this.orderCount = orderCount;
     }
 
     public Integer getFoodId() {
-        return FoodId;
+        return foodId;
     }
 
     public void setFoodId(Integer foodId) {
-        FoodId = foodId;
+        this.foodId = foodId;
     }
 
     public Integer getStatusId() {
-        return StatusId;
+        return statusId;
     }
 
     public void setStatusId(Integer statusId) {
-        StatusId = statusId;
+        this.statusId = statusId;
+    }
+
+    public Integer getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Integer userID) {
+        this.userID = userID;
     }
 
     public Date getDate() {
@@ -67,5 +79,13 @@ public class OrderEntity implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 }
