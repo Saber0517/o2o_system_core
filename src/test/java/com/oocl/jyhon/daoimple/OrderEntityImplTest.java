@@ -4,6 +4,8 @@ import com.oocl.jyhon.dao.OrderEntityDao;
 import com.oocl.jyhon.entiy.OrderEntity;
 import org.junit.Test;
 
+import java.util.Date;
+
 /**
  * Created by WhiteSaber on 15/8/15.
  */
@@ -17,6 +19,7 @@ public class OrderEntityImplTest {
         orderEntity.setFoodId(1);
         orderEntity.setOrderCount(1);
         orderEntity.setUserID(33);
+        orderEntity.setDate(new Date());
         orderEntityDao.addEntity(orderEntity);
     }
 }

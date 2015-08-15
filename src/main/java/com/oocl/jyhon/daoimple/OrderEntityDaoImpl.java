@@ -35,7 +35,7 @@ public class OrderEntityDaoImpl implements OrderEntityDao {
             pst.setInt(2, orderEntity.getStatusId());
             pst.setInt(3, orderEntity.getUserID());
             pst.setInt(4, orderEntity.getOrderCount());
-            pst.setDate(5, new java.sql.Date(new Date().getTime()));
+            pst.setDate(5, new java.sql.Date(orderEntity.getDate().getTime()));
             result = pst.executeUpdate();
             rs = pst.getGeneratedKeys();
             if (rs.next()) {
