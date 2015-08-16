@@ -1,9 +1,7 @@
 package com.oocl.jyhon.daoimple;
 
-import com.oocl.jyhon.dao.EntityDao;
 import com.oocl.jyhon.dao.FoodEntityDao;
 import com.oocl.jyhon.entiy.FoodEntity;
-import com.oocl.jyhon.entiy.UserEntity;
 import com.oocl.jyhon.util.DBConnectUtil;
 import com.oocl.jyhon.util.DBTableNameUtil;
 
@@ -11,8 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -245,7 +241,7 @@ public class FoodEntityDaoImple implements FoodEntityDao {
         try {
             con = DBConnectUtil.getConnection();
             final int size = foodIdList.size();
-            String query = createQuery(size);
+            String query = createQueryForFoodId(size);
             pst = con.prepareStatement(query);
 
             //set the value in sql
@@ -277,7 +273,7 @@ public class FoodEntityDaoImple implements FoodEntityDao {
     }
 
 
-    private static String createQuery(int length) {
+    private static String createQueryForFoodId(int length) {
         String query = "select * from " + tableName + " WHERE FOODID in(";
         StringBuilder queryBuilder = new StringBuilder(query);
         for (int i = 0; i < length; i++) {
