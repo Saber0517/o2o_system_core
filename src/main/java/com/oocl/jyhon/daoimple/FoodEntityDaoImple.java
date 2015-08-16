@@ -32,7 +32,7 @@ public class FoodEntityDaoImple implements FoodEntityDao {
         int result = 0;
         con = DBConnectUtil.getConnection();
         try {
-            pst = con.prepareStatement(sql,new String[]{"FOODID"});
+            pst = con.prepareStatement(sql, new String[]{"FOODID"});
             pst.setString(1, foodEntity.getFoodName());
             pst.setDouble(2, foodEntity.getPrice());
             pst.setString(3, foodEntity.getPictureURL());
@@ -41,7 +41,7 @@ public class FoodEntityDaoImple implements FoodEntityDao {
             pst.setInt(6, foodEntity.getStatusID());
             result = pst.executeUpdate();
             rs = pst.getGeneratedKeys();
-            if (rs.next()){
+            if (rs.next()) {
                 result = rs.getInt(1);
             }
             con.commit();
@@ -77,6 +77,7 @@ public class FoodEntityDaoImple implements FoodEntityDao {
         return result;
     }
 
+    @Override
     public int updateFoodEntityPrice(Integer id, Double price) {
         String sql = "UPDATE " + tableName + " SET PRICE=?,STATUSID=3 WHERE FOODID=?";
         Connection con = null;
@@ -95,9 +96,6 @@ public class FoodEntityDaoImple implements FoodEntityDao {
         }
         return result;
     }
-
-
-
 
     @Override
     public int deleteEntity(FoodEntity foodEntity) {
@@ -145,6 +143,7 @@ public class FoodEntityDaoImple implements FoodEntityDao {
         return null;
     }
 
+    @Override
     public List<FoodEntity> groupByTypeId(int typeId) {
         List<FoodEntity> foodEntityList = new LinkedList<FoodEntity>();
         String sql = "select * from " + tableName + " WHERE TYPEID=?";
@@ -181,6 +180,7 @@ public class FoodEntityDaoImple implements FoodEntityDao {
         return new int[0];
     }
 
+    @Override
     public int deleteEntityByFoodId(Integer foodId, Integer userId) {
         String sql = "DELETE FROM " + tableName + " WHERE FOODID=? AND USERID=?";
         Connection con = null;

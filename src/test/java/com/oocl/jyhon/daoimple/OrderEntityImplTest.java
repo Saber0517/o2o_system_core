@@ -6,6 +6,7 @@ import com.oocl.jyhon.entiy.OrderEntity;
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by WhiteSaber on 15/8/15.
@@ -23,8 +24,9 @@ public class OrderEntityImplTest {
         orderEntity.setDate(new Date());
         orderEntityDao.addEntity(orderEntity);
     }
+
     @Test
-    public void testJson(){
+    public void testJson() {
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setStatusId(3);
         orderEntity.setFoodId(1);
@@ -32,6 +34,12 @@ public class OrderEntityImplTest {
         orderEntity.setUserID(33);
         orderEntity.setDate(new Date());
         Gson gson = new Gson();
-        System.out.printf(gson.toJson(orderEntity,OrderEntity.class));
+        System.out.printf(gson.toJson(orderEntity, OrderEntity.class));
+    }
+
+    @Test
+    public void getOrderList() {
+        List<OrderEntity> orderEntityList = orderEntityDao.findOrderByUserId(33);
+        return;
     }
 }

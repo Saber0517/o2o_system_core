@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -92,5 +93,36 @@ public class OrderEntityDaoImpl implements OrderEntityDao {
     @Override
     public OrderEntity verify(OrderEntity c) {
         return null;
+    }
+
+    @Override
+    public List<OrderEntity> findOrderByUserId(Integer userId) {
+        List<OrderEntity> orderEntityList = new LinkedList<OrderEntity>();
+        String sql = "select * from " + tableName + " WHERE USERID=?";
+        Connection con = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            con = DBConnectUtil.getConnection();
+            pst = con.prepareStatement(sql);
+            pst.setInt(1, userId);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                OrderEntity orderEntity = new OrderEntity();
+                orderEntity.setOrderId(rs.getInt("ORDERID"));
+                orderEntity.setFoodId(rs.getInt("FOODID"));
+                orderEntity.setStatusId(rs.getInt("STATUSID"));
+                orderEntity.setUserID(rs.getInt("USERID"));
+                orderEntity.setDate(rs.getDate("ORDERTIME"));
+                orderEntity.setOrderCount(rs.getInt("NUMBERCOUNT"));
+                orderEntityList.add(orderEntity);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnectUtil.free(con, pst, rs);
+        }
+        return orderEntityList;
+
     }
 }
