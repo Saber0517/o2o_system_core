@@ -4,6 +4,7 @@ import com.oocl.jyhon.entiy.FoodEntity;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -11,14 +12,15 @@ import java.util.List;
  */
 public class FoodEntityDaoImpleTest {
     private static FoodEntityDaoImple foodEntityDaoImple;
+
     @Before
-    public void  before(){
-        foodEntityDaoImple  = new FoodEntityDaoImple();
+    public void before() {
+        foodEntityDaoImple = new FoodEntityDaoImple();
     }
 
     @Test
-        public void testInsert(){
-        FoodEntity foodEntity =new FoodEntity();
+    public void testInsert() {
+        FoodEntity foodEntity = new FoodEntity();
         foodEntity.setFoodName("child");
         foodEntity.setPictureURL("");
         foodEntity.setPrice(123.2);
@@ -27,9 +29,10 @@ public class FoodEntityDaoImpleTest {
         foodEntity.setTypeID(1);
         foodEntityDaoImple.addEntity(foodEntity);
     }
+
     @Test
-    public void testUpdate(){
-        FoodEntity foodEntity =new FoodEntity();
+    public void testUpdate() {
+        FoodEntity foodEntity = new FoodEntity();
         foodEntity.setFoodID(46);
         foodEntity.setFoodName("sea");
         foodEntity.setPictureURL("");
@@ -41,8 +44,19 @@ public class FoodEntityDaoImpleTest {
     }
 
     @Test
-    public void testFindAll(){
+    public void testFindAll() {
         List<FoodEntity> foodEntityList = foodEntityDaoImple.findAll();
         return;
+    }
+
+    @Test
+    public void testSearchFoodByFoodId() {
+        List<String> foodID = new LinkedList<String>();
+        foodID.add("71");
+        foodID.add("67");
+
+        final int size = foodID.size();
+        String[] arr = (String[]) foodID.toArray(new String[size]);
+        List<FoodEntity> foodEntityList = foodEntityDaoImple.searchFoodByFoodId(foodID);
     }
 }

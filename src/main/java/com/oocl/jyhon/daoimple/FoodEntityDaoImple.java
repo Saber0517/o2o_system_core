@@ -236,5 +236,56 @@ public class FoodEntityDaoImple implements FoodEntityDao {
         return result;
     }
 
+    @Override
+    public List<FoodEntity> searchFoodByFoodId(List<String> foodIdList) {
+        List<FoodEntity> foodEntityList = new LinkedList<FoodEntity>();
+        Connection con = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            con = DBConnectUtil.getConnection();
+            final int size = foodIdList.size();
+            String query = createQuery(size);
+            pst = con.prepareStatement(query);
+
+            //set the value in sql
+            int i = 1;
+            for (String foodID : foodIdList) {
+                pst.setInt(i, Integer.valueOf(foodID));
+                i++;
+            }
+
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                FoodEntity foodEntity = new FoodEntity();
+                foodEntity.setFoodID(rs.getInt("FOODID"));
+                foodEntity.setFoodName(rs.getString("FOODNAME"));
+                foodEntity.setUserID(rs.getInt("USERID"));
+                foodEntity.setStatusID(rs.getInt("STATUSID"));
+                foodEntity.setTypeID(rs.getInt("TYPEID"));
+                foodEntity.setPrice(rs.getDouble("PRICE"));
+                foodEntity.setPictureURL(rs.getString("PICTURE_URL"));
+                foodEntityList.add(foodEntity);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnectUtil.free(con, pst, rs);
+        }
+
+        return foodEntityList;
+    }
+
+
+    private static String createQuery(int length) {
+        String query = "select * from " + tableName + " WHERE FOODID in(";
+        StringBuilder queryBuilder = new StringBuilder(query);
+        for (int i = 0; i < length; i++) {
+            queryBuilder.append(" ?");
+            if (i != length - 1) queryBuilder.append(",");
+        }
+        queryBuilder.append(")");
+        return queryBuilder.toString();
+    }
 
 }

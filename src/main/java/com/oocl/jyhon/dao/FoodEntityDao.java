@@ -15,5 +15,9 @@ public interface FoodEntityDao extends EntityDao<FoodEntity> {
 
     int deleteEntityByFoodId(Integer foodId, Integer userId);
 
+    //以后的删除仅仅改变数据状态
     int updateEntityStatus(FoodEntity foodEntity);
+
+    List<FoodEntity> searchFoodByFoodId(List<String> foodIdList);
+
 }
