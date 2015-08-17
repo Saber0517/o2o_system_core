@@ -1,9 +1,7 @@
 package com.oocl.jyhon.daoimple;
 
-import com.oocl.jyhon.dao.EntityDao;
 import com.oocl.jyhon.dao.FoodEntityDao;
 import com.oocl.jyhon.entiy.FoodEntity;
-import com.oocl.jyhon.entiy.UserEntity;
 import com.oocl.jyhon.util.DBConnectUtil;
 import com.oocl.jyhon.util.DBTableNameUtil;
 
@@ -11,8 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,7 +28,7 @@ public class FoodEntityDaoImple implements FoodEntityDao {
         int result = 0;
         con = DBConnectUtil.getConnection();
         try {
-            pst = con.prepareStatement(sql,new String[]{"FOODID"});
+            pst = con.prepareStatement(sql, new String[]{"FOODID"});
             pst.setString(1, foodEntity.getFoodName());
             pst.setDouble(2, foodEntity.getPrice());
             pst.setString(3, foodEntity.getPictureURL());
@@ -41,7 +37,7 @@ public class FoodEntityDaoImple implements FoodEntityDao {
             pst.setInt(6, foodEntity.getStatusID());
             result = pst.executeUpdate();
             rs = pst.getGeneratedKeys();
-            if (rs.next()){
+            if (rs.next()) {
                 result = rs.getInt(1);
             }
             con.commit();
@@ -77,6 +73,7 @@ public class FoodEntityDaoImple implements FoodEntityDao {
         return result;
     }
 
+    @Override
     public int updateFoodEntityPrice(Integer id, Double price) {
         String sql = "UPDATE " + tableName + " SET PRICE=?,STATUSID=3 WHERE FOODID=?";
         Connection con = null;
@@ -95,9 +92,6 @@ public class FoodEntityDaoImple implements FoodEntityDao {
         }
         return result;
     }
-
-
-
 
     @Override
     public int deleteEntity(FoodEntity foodEntity) {
@@ -145,6 +139,7 @@ public class FoodEntityDaoImple implements FoodEntityDao {
         return null;
     }
 
+    @Override
     public List<FoodEntity> groupByTypeId(int typeId) {
         List<FoodEntity> foodEntityList = new LinkedList<FoodEntity>();
         String sql = "select * from " + tableName + " WHERE TYPEID=?";
@@ -181,6 +176,7 @@ public class FoodEntityDaoImple implements FoodEntityDao {
         return new int[0];
     }
 
+    @Override
     public int deleteEntityByFoodId(Integer foodId, Integer userId) {
         String sql = "DELETE FROM " + tableName + " WHERE FOODID=? AND USERID=?";
         Connection con = null;
@@ -236,5 +232,56 @@ public class FoodEntityDaoImple implements FoodEntityDao {
         return result;
     }
 
+    @Override
+    public List<FoodEntity> searchFoodByFoodId(List<String> foodIdList) {
+        List<FoodEntity> foodEntityList = new LinkedList<FoodEntity>();
+        Connection con = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            con = DBConnectUtil.getConnection();
+            final int size = foodIdList.size();
+            String query = createQueryForFoodId(size);
+            pst = con.prepareStatement(query);
+
+            //set the value in sql
+            int i = 1;
+            for (String foodID : foodIdList) {
+                pst.setInt(i, Integer.valueOf(foodID));
+                i++;
+            }
+
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                FoodEntity foodEntity = new FoodEntity();
+                foodEntity.setFoodID(rs.getInt("FOODID"));
+                foodEntity.setFoodName(rs.getString("FOODNAME"));
+                foodEntity.setUserID(rs.getInt("USERID"));
+                foodEntity.setStatusID(rs.getInt("STATUSID"));
+                foodEntity.setTypeID(rs.getInt("TYPEID"));
+                foodEntity.setPrice(rs.getDouble("PRICE"));
+                foodEntity.setPictureURL(rs.getString("PICTURE_URL"));
+                foodEntityList.add(foodEntity);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBConnectUtil.free(con, pst, rs);
+        }
+
+        return foodEntityList;
+    }
+
+
+    private static String createQueryForFoodId(int length) {
+        String query = "select * from " + tableName + " WHERE FOODID in(";
+        StringBuilder queryBuilder = new StringBuilder(query);
+        for (int i = 0; i < length; i++) {
+            queryBuilder.append(" ?");
+            if (i != length - 1) queryBuilder.append(",");
+        }
+        queryBuilder.append(")");
+        return queryBuilder.toString();
+    }
 
 }

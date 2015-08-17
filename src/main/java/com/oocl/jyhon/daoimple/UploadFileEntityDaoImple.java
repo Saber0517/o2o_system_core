@@ -25,7 +25,7 @@ public class UploadFileEntityDaoImple implements UploadFileEntityDao {
         int result = 0;
 
         try {
-            if (con.isClosed()) {
+            if (null == con || con.isClosed()) {
                 con = DBConnectUtil.getConnection();
             }
             pst = con.prepareStatement(sql);
